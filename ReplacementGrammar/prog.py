@@ -11,8 +11,8 @@ rules = {}
 #             #print row[0]
 #            # print row[1]
 #            rules.update({row[0]:row[1]})
-with open('SampleInput.txt', 'rb') as rulefile:
-    csv_reader = csv.reader(rulefile, delimiter='\r\n')
+with open('ActualInput.txt', 'rb') as rulefile:
+    csv_reader = csv.reader(rulefile, delimiter='\r')
     for row in csv_reader:
         print row
           # if len(row)==2:
@@ -31,7 +31,7 @@ print
 #             rows = ( line.split('|') for line in f )
 #             rules = { row[0]:row[1:] for row in rows }
 
-sample = open('SampleInput.txt')
+sample = open('ActualInput.txt')
 
 for line in sample:
     if not "|" in line:
