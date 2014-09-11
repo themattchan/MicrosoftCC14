@@ -16,5 +16,4 @@ main = do
   let dromes = lines f
       result = map (dromeTest . splitDrome) dromes
       concat = zipWith (++) (map removeCRLF dromes) result
-  --outfile <- openFile "output"++name++."txt" WriteMode
   writeFile "output" $ unlines concat
