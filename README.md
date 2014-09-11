@@ -5,8 +5,8 @@ Problems from the Microsoft Coding Challenge at UCSD, Feb 21 2014.
 
 Solved:
 
-NDrome
+- NDrome
 
-FollowDirections
+- FollowDirections
 
-ReplacementGRammar (partially, solution is wrong)
+- ReplacementGRammar (partially, solution is wrong)
