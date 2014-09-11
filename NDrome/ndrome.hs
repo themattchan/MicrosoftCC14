@@ -14,6 +14,6 @@ removeCRLF line = case splitDrome line of
 main = do
   f <- readFile "ActualInput.txt"
   let dromes = lines f
-      result = map (dromeTest . splitDrome) dromes
-      concat = zipWith (++) (map removeCRLF dromes) result
-  writeFile "output" $ unlines concat
+      tested = map (dromeTest . splitDrome) dromes
+      result = zipWith (++) (map removeCRLF dromes) tested
+  writeFile "output" $ unlines result
