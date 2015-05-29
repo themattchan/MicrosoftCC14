@@ -1,26 +1,21 @@
 #lang racket
 
-(define INFILE (open-input-file "SampleInput.txt" #:mode 'text))
+(define INFILE (file->lines "SampleInput.txt"))
 
-(define (read-formatted-line IN)
-  (string-downcase (read-line IN)))
+(define num-of-pairs (string->number (car INFILE)))
+(define query-strings (cdr INFILE))
 
-(define num-pairs 
-  (string->number (read-formatted-line INFILE)))
+(define (match? query string)
+  "fuck"
+  )
 
-(define input-pairs
-  (for/list ((_ num-pairs))
-    (cons (read-formatted-line INFILE)
-          (read-formatted-line INFILE))))
+(define (doList lst)
+  (match lst
+    [(? null?) '()]
+    [`(,query ,string ,rest ...) 
+     ; => 
+     (cons (match? query string) (doList rest))]))
 
-
-input-pairs
-
-(define (match? pair)
-  (let ((query (car pair))
-        (string (cdr pair)))
-    
-    ))
-
+(doList query-strings)
 
 ;(map match? input-pairs)
