@@ -7,4 +7,4 @@ Solved:
 
 - NDrome
 - FollowDirections
-- ReplacementGRammar (partially, solution is wrong)
+- ReplacementGrammar
