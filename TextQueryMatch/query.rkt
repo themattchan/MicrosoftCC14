@@ -1,11 +1,5 @@
 #lang racket
 
-(define INFILE (file->lines "SampleInput.txt"))
-(define OUTFILE "SampleOutput.txt")
-
-(define num-of-pairs (car INFILE))
-(define query-strings (cdr INFILE))
-
 (define (runQuery query string)
   "fuck"
   )
@@ -16,9 +10,17 @@
    ; => 
    (cons (runQuery query string) (doList rest))])
 
-
-;(let ((OUTPUT (string-join 
-;            (cons num-of-pairs (doList query-strings))
-;            "\n")))
-;  (display-to-file OUTPUT OUTFILE
-;                   #:exists 'replace))
+;; run
+(match-let* ([INFILE  "SampleInput.txt"]
+             [OUTFILE "SampleOutput.txt"]
+             ; ----
+             [`(,num-of-pairs ,query-strings ...)
+              ; =>
+              (file->lines INFILE)]
+             [OUTPUT 
+              ; =>
+              (string-join 
+               (cons num-of-pairs (doList query-strings))
+               "\n")])
+  (display-to-file OUTPUT OUTFILE
+                   #:exists 'replace))
