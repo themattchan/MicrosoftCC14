@@ -9,12 +9,11 @@
   "fuck"
   )
 
-(define (doList lst)
-  (match lst
-    [(? null?) '()]
-    [`(,query ,string ,rest ...) 
-     ; => 
-     (cons (match? query string) (doList rest))]))
+(define/match (doList lst)
+  [((? null?)) '()]
+  [(`(,query ,string ,rest ...))
+   ; => 
+   (cons (match? query string) (doList rest))])
 
 (doList query-strings)
 
