@@ -8,3 +8,4 @@ Solved:
 - NDrome
 - FollowDirections
 - ReplacementGrammar
+- TextQueryMatch

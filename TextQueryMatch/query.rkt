@@ -17,8 +17,8 @@
    (cons (runQuery query string) (doList rest))])
 
 ;; run
-(match-let* ([INFILE  "SampleInput.txt"]
-             [OUTFILE "SampleOutput.txt"]
+(match-let* ([INFILE  "ActualInput.txt"]
+             [OUTFILE "ActualOutput.txt"]
              [`(,num ,xs ...)
               (map string-downcase (file->lines INFILE))]
              [OUTPUT
