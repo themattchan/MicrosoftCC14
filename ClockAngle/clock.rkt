@@ -13,7 +13,7 @@
 (define/match (abs-hand-positions t)
   ((`(,h ,m ,s))
    ; =>
-   `(,(+ (* h 30) (* 0.5 m) (* (/ .5 60) s))
+   `(,(+ (* 30 h) (* 0.5 m) (* (/ 0.5 60) s))
      ,(+ (* 6 m) (* (/ 6 60) s))
      ,(* 6 s))))
 
@@ -49,10 +49,10 @@
       ,(Δang m s)))))
 
 (define OUTPUT
-  (string-join
+  ((curryr string-join "\n")
    (cons num-input
          (map (curryr string-join ", ")
-              (map calc-angles times)))
-   "\n"))
+              (map calc-angles times)))))
+
 
 (display-to-file OUTPUT OUTFILE #:exists 'replace)
