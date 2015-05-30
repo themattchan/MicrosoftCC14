@@ -9,3 +9,4 @@ Solved:
 - FollowDirections
 - ReplacementGrammar
 - TextQueryMatch
+- ClockAngle

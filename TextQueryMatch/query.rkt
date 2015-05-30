@@ -23,6 +23,6 @@
               (map string-downcase (file->lines INFILE))]
              [OUTPUT
               (string-join (cons num (doList xs)) "\n")])
-  
+
   (display-to-file OUTPUT OUTFILE
                    #:exists 'replace))
