@@ -162,9 +162,10 @@ parseSudokus = map (Sudoku . parseSudoku) . splitOn ["\r"] . lines
 solveChallenge :: IO ()
 solveChallenge = do
   puzzles <- parseSudokus <$> readFile "ActualInput.txt"
-  let solved = case mapM (fmap prettySudoku . solve) puzzles of
-                 Nothing -> "No solutions found!!"
-                 Just sols -> unlines sols
+  let solved = fromMaybe "No solutions found!!"
+             . fmap unlines
+             . mapM (fmap prettySudoku . solve)
+             $ puzzles
   writeFile "ActualOutput.txt" solved
 
 testSamples = do
