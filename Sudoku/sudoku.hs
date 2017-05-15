@@ -24,12 +24,12 @@ example =
       [ [Just 3, Just 6, Nothing,Nothing,Just 7, Just 1, Just 2, Nothing,Nothing]
       , [Nothing,Just 5, Nothing,Nothing,Nothing,Nothing,Just 1, Just 8, Nothing]
       , [Nothing,Nothing,Just 9, Just 2, Nothing,Just 4, Just 7, Nothing,Nothing]
-      , [Nothing,Nothing,Nothing,Nothing,Just 1, Just 3, Nothing,Just 2, Just 8]
-      , [Just 4, Nothing,Nothing,Just 5, Nothing,Just 2, Nothing,Nothing,Just 9]
+      , [Nothing,Nothing,Nothing,Nothing,Just 1, Just 3, Nothing,Just 2, Just 8 ]
+      , [Just 4, Nothing,Nothing,Just 5, Nothing,Just 2, Nothing,Nothing,Just 9 ]
       , [Just 2, Just 7, Nothing,Just 4, Just 6, Nothing,Nothing,Nothing,Nothing]
       , [Nothing,Nothing,Just 5, Just 3, Nothing,Just 8, Just 9, Nothing,Nothing]
       , [Nothing,Just 8, Just 3, Nothing,Nothing,Nothing,Nothing,Just 6, Nothing]
-      , [Nothing,Nothing,Just 7, Just 6, Just 9, Nothing,Nothing,Just 4, Just 3]
+      , [Nothing,Nothing,Just 7, Just 6, Just 9, Nothing,Nothing,Just 4, Just 3 ]
       ]
 
 -- `isSudoku s` checks if `s` is really a valid representation of a sudoku
@@ -44,7 +44,7 @@ isSudoku (Sudoku s)      = validRows && validCols && validNums
 
 -- `isSolved s` checks if `s` is already solved, i.e. there are no blanks
 isSolved :: Sudoku -> Bool
-isSolved = (Nothing `notElem`) . concat . rows
+isSolved = notElem Nothing . concat . rows
 
 -- `printSudoku s` prints a representation of the sudoku `s` on the screen
 printSudoku :: Sudoku -> IO ()
@@ -57,7 +57,7 @@ prettySudoku =  unlines . map (unwords . map printCell) . rows
 -- `readSudoku file` reads from the `file`, and either delivers it, or stops
 -- if the file did not contain a sudoku
 readSudoku :: FilePath -> IO Sudoku
-readSudoku = readFile >=> return . Sudoku . map parseRow . lines
+readSudoku = fmap (Sudoku . map parseRow . lines) . readFile
   where parseRow = map parseChar
         parseChar x | x == '.'            = Nothing
                     | x `elem` ['1'..'9'] = Just (digitToInt x)
@@ -71,9 +71,7 @@ cell = arbitrary `suchThatMaybe` (\x -> x >= 0 && x <= 9)
 
 -- an instance for generating Arbitrary Sudokus
 instance Arbitrary Sudoku where
-  arbitrary =
-    do rows <- sequence [ sequence [ cell | j <- [1..9] ] | i <- [1..9] ]
-       return (Sudoku rows)
+  arbitrary = Sudoku <$> sequence [ sequence [ cell | j <- [1..9] ] | i <- [1..9] ]
 
 -------------------------------------------------------------------------
 
@@ -120,7 +118,7 @@ update (Sudoku s) (r,c) i = Sudoku newGrid
 
 candidates :: Sudoku -> Pos -> [Int]
 candidates (Sudoku s) (r,c) =
-  [1..9] \\ (map (fromMaybe 0) (rowCands ++ colCands ++ boxCands))
+  [1..9] \\ map (fromMaybe 0) (rowCands ++ colCands ++ boxCands)
   where (sr,sc,sb) = blocksSet (Sudoku s)
         rowCands   = sr !! r
         colCands   = sc !! c
@@ -136,7 +134,7 @@ solve s | not (isSudoku s) = Nothing
     sols      = [solve (update s nextEmpty (Just i)) | i <- [1..9]]
 
 readAndSolve :: FilePath -> IO Sudoku
-readAndSolve f = readSudoku f >>= return . fromJust . solve
+readAndSolve = fmap (fromJust . solve) . readSudoku
 
 isSolutionOf :: Sudoku -> Sudoku -> Bool
 isSolutionOf s1 s2
