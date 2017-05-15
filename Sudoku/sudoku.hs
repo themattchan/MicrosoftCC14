@@ -154,7 +154,7 @@ parseSudokus :: String -> [Sudoku]
 parseSudokus = map parseSudoku . splitOn ["\r"] . lines
   where
     parseSudoku = Sudoku . map (map parseCell . words)
-    parseCell   = fmap read . mfilter (all isDigit) . Just
+    parseCell   = fmap read . mfilter (all isDigit) . pure
 
 solveChallenge :: IO ()
 solveChallenge
