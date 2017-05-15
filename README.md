@@ -10,3 +10,4 @@ Solved:
 - ReplacementGrammar
 - TextQueryMatch
 - ClockAngle
+- Sudoku
