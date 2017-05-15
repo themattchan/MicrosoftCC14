@@ -153,10 +153,10 @@ prop_SolveSound s = isSudoku s && isJust s' ==> isSolutionOf (fromJust s') s
 -- Finally, solve the competition problem
 
 parseSudokus :: String -> [Sudoku]
-parseSudokus = map (Sudoku . parseSudoku) . splitOn ["\r"] . lines
+parseSudokus = map parseSudoku . splitOn ["\r"] . lines
   where
-    parseSudoku =  map (map parseCell . words)
-    parseCell = fmap read . mfilter (all isDigit) . Just
+    parseSudoku = Sudoku . map (map parseCell . words)
+    parseCell   = fmap read . mfilter (all isDigit) . Just
 
 solveChallenge :: IO ()
 solveChallenge
