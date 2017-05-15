@@ -160,13 +160,13 @@ parseSudokus = map (Sudoku . parseSudoku) . splitOn ["\r"] . lines
     parseCell = fmap read . mfilter (all isDigit) . Just
 
 solveChallenge :: IO ()
-solveChallenge = do
-  puzzles <- parseSudokus <$> readFile "ActualInput.txt"
-  let solved = fromMaybe "No solutions found!!"
-             . fmap unlines
-             . mapM (fmap prettySudoku . solve)
-             $ puzzles
-  writeFile "ActualOutput.txt" solved
+solveChallenge
+   =  writeFile "ActualOutput.txt"
+  =<< fromMaybe "No solutions found!!"
+   .  fmap unlines
+   .  mapM (fmap prettySudoku . solve)
+   .  parseSudokus
+  <$> readFile "ActualInput.txt"
 
 testSamples = do
   puzzles <- parseSudokus <$> readFile "SampleInput.txt"
