@@ -51,14 +51,13 @@ printSudoku :: Sudoku -> IO ()
 printSudoku = putStrLn . prettySudoku
 
 prettySudoku :: Sudoku -> String
-prettySudoku =  unlines . map (intersperse ' ' . concatMap printCell) . rows
-  where printCell Nothing  = "."
-        printCell (Just n) = show n
+prettySudoku =  unlines . map (unwords . map printCell) . rows
+  where printCell = fromMaybe "." . fmap show
 
 -- `readSudoku file` reads from the `file`, and either delivers it, or stops
 -- if the file did not contain a sudoku
 readSudoku :: FilePath -> IO Sudoku
-readSudoku f = readFile f >>= return . Sudoku . map parseRow . lines
+readSudoku = readFile >=> return . Sudoku . map parseRow . lines
   where parseRow = map parseChar
         parseChar x | x == '.'            = Nothing
                     | x `elem` ['1'..'9'] = Just (digitToInt x)
@@ -168,6 +167,7 @@ solveChallenge
    .  parseSudokus
   <$> readFile "ActualInput.txt"
 
+testSamples :: IO ()
 testSamples = do
   puzzles <- parseSudokus <$> readFile "SampleInput.txt"
   solns   <- parseSudokus <$> readFile "SampleSolution.txt"
