@@ -87,11 +87,10 @@ blocks (Sudoku s) = s ++ transpose s ++ nineSquares s
 blocksSet :: Sudoku -> ([Block], [Block], [Block])
 blocksSet (Sudoku s) = (s, transpose s, nineSquares s)
 
-nineSquares :: [Block] -> [Block]
-nineSquares = concatMap (tbtBlock . colGroups) . rowGroups
+nineSquares :: [[Maybe Int]] -> [[Maybe Int]]
+nineSquares = map concat . concatMap transpose . rowGroups . colGroups
   where rowGroups = chunksOf 3
         colGroups = map (chunksOf 3)
-        tbtBlock  = concat . transpose
 
 isOkay :: Sudoku -> Bool
 isOkay = and . map isOkayBlock . blocks
